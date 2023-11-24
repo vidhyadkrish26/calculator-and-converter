@@ -1,0 +1,278 @@
+
+from tkinter import *
+from tkinter import font as tkfont
+import tkinter as tk
+
+win_root = Tk()
+
+# main window size
+win_root.geometry("315x426")
+win_root.resizable(0, 0) # resizing disabled
+win_root.title("Calculator")
+win_root.config(bg="#e8ebed")
+
+# window icon image
+root_img_icon = PhotoImage(file=r'C:\Users\Admin\pythontkinter\images\icons8-calculator-48.png')
+win_root.iconphoto(False, root_img_icon)
+
+# Functions
+#Calculator functions
+# set default value 0
+def temp_text(e):
+    calc_text_entry.delete(0,"end")
+
+# updates input whenever we enter
+def btn_click(item_exp):
+    global calc_expres
+    calc_expres = calc_expres + str(item_exp)
+    calc_input.set(calc_expres)
+
+# clear button click function to clear the input box
+def btn_clear():
+    global calc_expres
+    calc_expres = ""
+    calc_input.set("")
+#
+def btn_equal():
+    global calc_expres
+    calc_result = str(eval(calc_expres))
+    calc_input.set(calc_result)
+    calc_expres = ""
+
+# backspace button
+def btn_bckspace():
+    calc_latest = calc_text_entry.get()
+    calc_length = len(calc_latest)-1
+    calc_text_entry.delete(calc_length,END)
+
+# end of calculator functions ***************
+
+# Define a function for switching the frames
+def change_to_calc():
+   calc_frame.pack( fill='both', expand=1)
+   calc_frame.place(x=8,y=60)
+   conv_frame.pack_forget()
+
+def change_to_conv():
+   conv_frame.pack(fill='both', expand=1)
+   calc_frame.pack_forget()
+
+# calculator frame
+calc_frame = Frame(win_root,width=315,height=380,bg="#e8ebed")
+calc_frame.place(x=8,y=60)
+
+# Creating drop down menu to select calcultor or converter
+select_menu_frame = Frame(win_root,height=40,width=315,bd=5,bg="#e8ebed")
+select_menu_frame.pack(side=TOP)
+
+# creating drop down Image
+dropmenu_btn_img = PhotoImage(file=r'C:\Users\Admin\pythontkinter\images\icons8-list-30-grey.png')
+
+# creating drop down menu button
+
+dropmenu_btn = Menubutton(select_menu_frame,image=dropmenu_btn_img,relief=RAISED)
+dropmenu_btn.pack(side=LEFT)
+dropmenu_btn.place(x=0,y=0)
+dropmenu_btn.config(height=30,width=30,borderwidth=0,border=0,bg="#e8ebed")
+# creating sub menu
+dropmenu_btn.menu = Menu(dropmenu_btn,tearoff= 0)
+dropmenu_btn['menu'] = dropmenu_btn.menu
+dropmenu_btn.menu.add_cascade(label="Calculator",command=lambda : change_to_calc())
+dropmenu_btn.menu.add_cascade(label = "Weight Converter",command=lambda: change_to_conv())
+
+
+# creating calculator window frame *************
+calc_expres = ""
+calc_input = StringVar()
+
+calc_text_entry = Entry(calc_frame,font=('arial',34),width=12, bg='#e8ebed',bd=0,textvariable=calc_input,justify=RIGHT)
+calc_text_entry.grid(column=0, row =0,columnspan=4,ipady=1,ipadx=1)
+calc_text_entry.insert(0,"0")
+calc_text_entry.bind("<FocusIn>",temp_text)
+
+# Define font
+calc_myFont = tkfont.Font(family='arial', size=14)
+
+# button style
+calc_btn_style = {
+    'font': 'arial 14',
+    'fg':"black",
+    'height': '2',
+    'bd':'0',
+    'bg':"white",
+    'cursor':"hand2",
+    'border' :'0'
+  }
+
+# creating button for C(clear) and <- (backspace)
+calc_clear = Button(calc_frame, text="C",**calc_btn_style,width=13,
+                    command=lambda :btn_clear()).grid(column=0, row=1,columnspan=2,padx=1,pady=1)
+calc_bckspace = Button(calc_frame, text="<-",**calc_btn_style,width=13,
+                command=lambda: btn_bckspace()).grid(column=2,row=1,columnspan=2,padx=1,pady=1)
+
+
+# second row buttons 7, 8,9,x
+
+calc_seven = Button(calc_frame, text="7", width=6,**calc_btn_style,
+               command=lambda: btn_click(7)).grid(row=2, column=0, padx=1, pady=1)
+
+calc_eight = Button(calc_frame, text="8",  width=6,**calc_btn_style,
+               command=lambda: btn_click(8)).grid(row=2, column=1, padx=1, pady=1)
+
+calc_nine = Button(calc_frame, text="9",width=6,**calc_btn_style,
+              command=lambda: btn_click(9)).grid(row=2, column=2, padx=1, pady=1)
+
+calc_multiply = Button(calc_frame, text="*", width=6,**calc_btn_style,
+                  command=lambda: btn_click("*")).grid(row=2, column=3, padx=1, pady=1)
+
+# third row buttons 4,5,6, -
+
+calc_four = Button(calc_frame, text="4", width=6,**calc_btn_style,
+              command=lambda: btn_click(4)).grid(row=3, column=0, padx=1, pady=1)
+
+calc_five = Button(calc_frame, text="5", width=6,**calc_btn_style,
+              command=lambda: btn_click(5)).grid(row=3, column=1, padx=1, pady=1)
+
+calc_six = Button(calc_frame, text="6",width=6,**calc_btn_style,
+             command=lambda: btn_click(6)).grid(row=3, column=2, padx=1, pady=1)
+
+calc_minus = Button(calc_frame, text="-", width=6,**calc_btn_style,
+               command=lambda: btn_click("-")).grid(row=3, column=3, padx=1, pady=1)
+
+# fourth row 1,2,3,+
+
+calc_one = Button(calc_frame, text="1", width=6,**calc_btn_style,
+             command=lambda: btn_click(1)).grid(row=4, column=0, padx=1, pady=1)
+
+calc_two = Button(calc_frame, text="2", width=6,**calc_btn_style,
+             command=lambda: btn_click(2)).grid(row=4, column=1, padx=1, pady=1)
+
+calc_three = Button(calc_frame, text="3", width=6,**calc_btn_style,
+               command=lambda: btn_click(3)).grid(row=4, column=2, padx=1, pady=1)
+
+calc_plus = Button(calc_frame, text="+",width=6,**calc_btn_style,
+              command=lambda: btn_click("+")).grid(row=4, column=3, padx=1, pady=1)
+
+# fifth row /,0,.,=
+calc_divide = Button(calc_frame,text="/",width=6,**calc_btn_style,
+                     command=lambda:btn_click("/")).grid(row=5,column=0,padx=1,pady=1)
+
+zero = Button(calc_frame, text="0", width=6,**calc_btn_style,
+              command=lambda: btn_click(0)).grid(row=5, column=1, padx=1, pady=1)
+
+point = Button(calc_frame, text=".", width=6,**calc_btn_style,
+               command=lambda: btn_click(".")).grid(row=5, column=2, padx=1, pady=1)
+
+equals = Button(calc_frame, text="=", width=6,**calc_btn_style,
+                command=lambda: btn_equal()).grid(row=5, column=3, padx=1, pady=1)
+#calculator frame ending here*******************
+
+# creating Converter frame**************
+
+conv_frame = Frame(win_root,width=315,height=380,bg="#e8ebed")
+
+conv_weight_menu_options = ["gram", "kilogram", "milligram", "quintal", "ton", "pound", "ounce"]
+conv_temp_menu_options = [ "celsius", "fahrenheit" ]
+# converter functions
+conv_submenu_input = StringVar(conv_frame)
+conv_sub_optmenu_input = tk.OptionMenu(conv_frame, conv_submenu_input, *conv_weight_menu_options)
+conv_submenu_output = StringVar(conv_frame)
+conv_sub_optmenu_output = tk.OptionMenu(conv_frame,conv_submenu_output,*conv_weight_menu_options)
+def main_menu_select(event):
+    if event == "Weight":
+        conv_submenu_input.set("gram")
+        menu = conv_sub_optmenu_input["menu"]
+        menu.delete(0, "end")
+        for string in conv_weight_menu_options:
+            menu.add_command(label=string, command=lambda value=string: conv_submenu_input.set(value))
+
+        conv_submenu_output.set("gram")
+        menu = conv_sub_optmenu_output["menu"]
+        menu.delete(0, "end")
+        for string in conv_weight_menu_options:
+            menu.add_command(label=string, command=lambda value=string: conv_submenu_output.set(value))
+
+      elif event == "Temperature":
+        conv_submenu_input.set("celsius")
+        menu = conv_sub_optmenu_input["menu"]
+        menu.delete(0, "end")
+        for string in conv_temp_menu_options:
+            menu.add_command(label=string, command=lambda value=string: conv_submenu_input.set(value))
+
+        conv_submenu_output.set("celsius")
+        menu = conv_sub_optmenu_output["menu"]
+        menu.delete(0, "end")
+        for string in conv_temp_menu_options:
+            menu.add_command(label=string, command=lambda value=string: conv_submenu_output.set(value))
+
+def convert():
+    # dictionary of conversion factors
+    unitDict = {
+        "gram": 1.0,
+        "kilogram": 1000.0,
+        "milligram": 0.001,
+        "quintal": 100000.0,
+        "ton": 1000000.0,
+        "pound": 453.592,
+        "ounce": 28.3495
+    }
+    conv_input_unit = conv_submenu_input.get()
+    conv_output_unit = conv_submenu_output.get()
+    input_value = float(conv_input_data.get())
+    if conv_input_unit == "celsius" and conv_output_unit == "fahrenheit":
+        conv_output_data.delete(0, END)
+        conv_output_data.insert(0, (input_value * 1.8) + 32)
+    elif conv_input_unit == "fahrenheit" and conv_output_unit == "celsius":
+        conv_output_data.delete(0, END)
+        conv_output_data.insert(0, (input_value - 32) * (5 / 9))
+    elif conv_input_unit == conv_output_unit:
+        conv_output_data.delete(0, END)
+        conv_output_data.insert(0, input_value)
+    else:
+        conv_output_data.delete(0, END)
+        conv_output_data.insert(0, round(input_value * unitDict[conv_input_unit] / unitDict[conv_output_unit], 5))
+
+
+conv_input = StringVar(conv_frame)
+conv_main_menu_options = ['Weight','Temperature']
+conv_input.set("Weight")
+
+conv_main_menu = tk.OptionMenu(conv_frame,conv_input,*conv_main_menu_options,command= main_menu_select)
+conv_main_menu.place(x=20,y=30)
+conv_main_menu.config(bd=0,width=29,background="#eee",font="arial 11",activebackground='white',borderwidth=1)
+conv_main_sub = conv_frame.nametowidget(conv_main_menu.menuname)
+
+# creating input values
+conv_input_label = Label(conv_frame,text="From:",bd=0, font="verdana 10")
+conv_input_label.place(x=32,y=90)
+
+conv_submenu_input.set("gram")
+
+conv_sub_optmenu_input = tk.OptionMenu(conv_frame,conv_submenu_input,*conv_weight_menu_options)
+conv_sub_optmenu_input.place(x=32,y=110)
+conv_sub_optmenu_input.config(bd=1,width=26,height=1,background="#eee",font="arial 11",activebackground='white',borderwidth=1)
+
+conv_input_data = Entry(conv_frame,bg="white",bd=0)
+conv_input_data.place(x=32,y=150,width=249,height=30)
+
+# output values
+conv_output_label = Label(conv_frame,text="To:",bd=0 ,font="verdana 10")
+conv_output_label.place(x=32,y=200)
+
+conv_submenu_output = StringVar(conv_frame)
+conv_weight_menu_opt_out = ["gram", "kilogram", "milligram", "quintal", "ton", "pound", "ounce"]
+conv_submenu_output.set("gram")
+
+conv_sub_optmenu_output = tk.OptionMenu(conv_frame,conv_submenu_output,*conv_weight_menu_opt_out)
+conv_sub_optmenu_output.place(x=32,y=220)
+conv_sub_optmenu_output.config(bd=1,width=23,height=1,background="#eee",font="arial 12",activebackground='white',borderwidth=1)
+
+conv_output_data = Entry(conv_frame,bg="white",bd=0)
+conv_output_data.place(x=32,y=260,width=249,height=30)
+
+convert_button = Button(conv_frame,text = "CONVERT", bg = "#57a1f2",fg = "#000000",font="verdana 10",command = convert)
+convert_button.place(x=32,y=300)
+
+# converter frame ending here**************
+
+win_root.mainloop()
