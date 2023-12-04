@@ -2,12 +2,14 @@
 from tkinter import *
 from tkinter import font as tkfont
 import tkinter as tk
+from PIL import  Image,ImageTk
+
 
 win_root = Tk()
 
 # main window size
 win_root.geometry("315x426")
-win_root.resizable(0, 0) # resizing disabled
+#win_root.resizable(0, 0) # resizing disabled
 win_root.title("Calculator")
 win_root.config(bg="#e8ebed")
 
@@ -15,6 +17,7 @@ win_root.config(bg="#e8ebed")
 root_img_icon = PhotoImage(file=r'C:\Users\Admin\pythontkinter\images\icons8-calculator-48.png')
 win_root.iconphoto(False, root_img_icon)
 
+global click_btn_img
 # Functions
 #Calculator functions
 # set default value 0
@@ -92,6 +95,11 @@ calc_text_entry.bind("<FocusIn>",temp_text)
 
 # Define font
 calc_myFont = tkfont.Font(family='arial', size=14)
+#btn_img = Image.open(r"C:\Users\Admin\pythontkinter\images\button3.png")
+
+#resized_image= btn_img.resize(30,20)
+click_btn_img = PhotoImage(file=r'C:\Users\Admin\pythontkinter\images\icons8-rectangle-96.png')
+click_btn_img.subsample(3,3)
 
 # button style
 calc_btn_style = {
@@ -102,77 +110,85 @@ calc_btn_style = {
     'bg':"white",
     'cursor':"hand2",
     'border' :'0'
+    #'image' : click_btn_img
   }
 
-# creating button for C(clear) and <- (backspace)
-calc_clear = Button(calc_frame, text="C",**calc_btn_style,width=13,
-                    command=lambda :btn_clear()).grid(column=0, row=1,columnspan=2,padx=1,pady=1)
-calc_bckspace = Button(calc_frame, text="<-",**calc_btn_style,width=13,
-                command=lambda: btn_bckspace()).grid(column=2,row=1,columnspan=2,padx=1,pady=1)
 
+# creating button for C(clear) and <- (backspace)
+calc_clear = Button(calc_frame,text = "C",**calc_btn_style,width=13,command=lambda :btn_clear())
+calc_clear.grid(column=0, row=1,columnspan=2,padx=1,pady=1)
+
+
+calc_bckspace = Button(calc_frame, text="<-",**calc_btn_style,width=13,command=lambda: btn_bckspace())
+calc_bckspace.grid(column=2,row=1,columnspan=2,padx=1,pady=1)
 
 # second row buttons 7, 8,9,x
 
-calc_seven = Button(calc_frame, text="7", width=6,**calc_btn_style,
-               command=lambda: btn_click(7)).grid(row=2, column=0, padx=1, pady=1)
+calc_seven = Button(calc_frame, text="7", width=6,**calc_btn_style,command=lambda: btn_click(7))
+calc_seven.grid(row=2, column=0, padx=1, pady=1)
 
-calc_eight = Button(calc_frame, text="8",  width=6,**calc_btn_style,
-               command=lambda: btn_click(8)).grid(row=2, column=1, padx=1, pady=1)
+calc_eight = Button(calc_frame, text="8",  width=6,**calc_btn_style,command=lambda: btn_click(8))
+calc_eight.grid(row=2, column=1, padx=1, pady=1)
 
-calc_nine = Button(calc_frame, text="9",width=6,**calc_btn_style,
-              command=lambda: btn_click(9)).grid(row=2, column=2, padx=1, pady=1)
+calc_nine = Button(calc_frame, text="9",width=6,**calc_btn_style,command=lambda: btn_click(9))
+calc_nine.grid(row=2, column=2, padx=1, pady=1)
 
-calc_multiply = Button(calc_frame, text="*", width=6,**calc_btn_style,
-                  command=lambda: btn_click("*")).grid(row=2, column=3, padx=1, pady=1)
+calc_multiply = Button(calc_frame, text="*", width=6,**calc_btn_style,command=lambda: btn_click("*"))
+calc_multiply.grid(row=2, column=3, padx=1, pady=1)
 
 # third row buttons 4,5,6, -
 
-calc_four = Button(calc_frame, text="4", width=6,**calc_btn_style,
-              command=lambda: btn_click(4)).grid(row=3, column=0, padx=1, pady=1)
+calc_four = Button(calc_frame, text="4", width=6,**calc_btn_style,command=lambda: btn_click(4))
+calc_four.grid(row=3, column=0, padx=1, pady=1)
 
-calc_five = Button(calc_frame, text="5", width=6,**calc_btn_style,
-              command=lambda: btn_click(5)).grid(row=3, column=1, padx=1, pady=1)
+calc_five = Button(calc_frame, text="5", width=6,**calc_btn_style,command=lambda: btn_click(5))
+calc_five.grid(row=3, column=1, padx=1, pady=1)
 
-calc_six = Button(calc_frame, text="6",width=6,**calc_btn_style,
-             command=lambda: btn_click(6)).grid(row=3, column=2, padx=1, pady=1)
+calc_six = Button(calc_frame, text="6",width=6,**calc_btn_style,command=lambda: btn_click(6))
+calc_six.grid(row=3, column=2, padx=1, pady=1)
 
-calc_minus = Button(calc_frame, text="-", width=6,**calc_btn_style,
-               command=lambda: btn_click("-")).grid(row=3, column=3, padx=1, pady=1)
+calc_minus = Button(calc_frame, text="-", width=6,**calc_btn_style,command=lambda: btn_click("-"))
+calc_minus.grid(row=3, column=3, padx=1, pady=1)
 
 # fourth row 1,2,3,+
 
-calc_one = Button(calc_frame, text="1", width=6,**calc_btn_style,
-             command=lambda: btn_click(1)).grid(row=4, column=0, padx=1, pady=1)
+calc_one = Button(calc_frame, text="1", width=6,**calc_btn_style,command=lambda: btn_click(1))
+calc_one.grid(row=4, column=0, padx=1, pady=1)
 
-calc_two = Button(calc_frame, text="2", width=6,**calc_btn_style,
-             command=lambda: btn_click(2)).grid(row=4, column=1, padx=1, pady=1)
+calc_two = Button(calc_frame, text="2", width=6,**calc_btn_style,command=lambda: btn_click(2))
+calc_two.grid(row=4, column=1, padx=1, pady=1)
 
-calc_three = Button(calc_frame, text="3", width=6,**calc_btn_style,
-               command=lambda: btn_click(3)).grid(row=4, column=2, padx=1, pady=1)
+calc_three = Button(calc_frame, text="3", width=6,**calc_btn_style,command=lambda: btn_click(3))
+calc_three.grid(row=4, column=2, padx=1, pady=1)
 
-calc_plus = Button(calc_frame, text="+",width=6,**calc_btn_style,
-              command=lambda: btn_click("+")).grid(row=4, column=3, padx=1, pady=1)
+calc_plus = Button(calc_frame, text="+",width=6,**calc_btn_style,command=lambda: btn_click("+"))
+calc_plus.grid(row=4, column=3, padx=1, pady=1)
 
 # fifth row /,0,.,=
-calc_divide = Button(calc_frame,text="/",width=6,**calc_btn_style,
-                     command=lambda:btn_click("/")).grid(row=5,column=0,padx=1,pady=1)
+calc_divide = Button(calc_frame,text="/",width=6,**calc_btn_style,command=lambda:btn_click("/"))
+calc_divide.grid(row=5,column=0,padx=1,pady=1)
 
-zero = Button(calc_frame, text="0", width=6,**calc_btn_style,
-              command=lambda: btn_click(0)).grid(row=5, column=1, padx=1, pady=1)
+calc_zero = Button(calc_frame, text="0", width=6,**calc_btn_style,command=lambda: btn_click(0))
+calc_zero.grid(row=5, column=1, padx=1, pady=1)
 
-point = Button(calc_frame, text=".", width=6,**calc_btn_style,
-               command=lambda: btn_click(".")).grid(row=5, column=2, padx=1, pady=1)
+calc_point = Button(calc_frame, text=".", width=6,**calc_btn_style,command=lambda: btn_click("."))
+calc_point.grid(row=5, column=2, padx=1, pady=1)
 
-equals = Button(calc_frame, text="=", width=6,**calc_btn_style,
-                command=lambda: btn_equal()).grid(row=5, column=3, padx=1, pady=1)
+calc_equals = Button(calc_frame, text="=", width=6,**calc_btn_style,command=lambda: btn_equal())
+calc_equals.grid(row=5, column=3, padx=1, pady=1)
 #calculator frame ending here*******************
 
 # creating Converter frame**************
 
 conv_frame = Frame(win_root,width=315,height=380,bg="#e8ebed")
 
+# sub menu values
 conv_weight_menu_options = ["gram", "kilogram", "milligram", "quintal", "ton", "pound", "ounce"]
 conv_temp_menu_options = [ "celsius", "fahrenheit" ]
+conv_length_menu_options = ["millimeter", "centimeter", "meter", "kilometer", "foot", "mile", "yard", "inch"]
+conv_area_menu_options = ["square meter", "square kilometer", "square centimeter", "square millimeter","are", "hectare", "acre", "square mile", "square foot" ]
+conv_volume_menu_options = [ "cubic meter", "cubic centimeter", "litre", "millilitre", "gallon" ]
+
 # converter functions
 conv_submenu_input = StringVar(conv_frame)
 conv_sub_optmenu_input = tk.OptionMenu(conv_frame, conv_submenu_input, *conv_weight_menu_options)
@@ -192,7 +208,8 @@ def main_menu_select(event):
         for string in conv_weight_menu_options:
             menu.add_command(label=string, command=lambda value=string: conv_submenu_output.set(value))
 
-      elif event == "Temperature":
+    #  conv_submenu = tk.OptionMenu(conv_frame, conv_submenu_input, *conv_weight_menu_options)
+    elif event == "Temperature":
         conv_submenu_input.set("celsius")
         menu = conv_sub_optmenu_input["menu"]
         menu.delete(0, "end")
@@ -204,10 +221,68 @@ def main_menu_select(event):
         menu.delete(0, "end")
         for string in conv_temp_menu_options:
             menu.add_command(label=string, command=lambda value=string: conv_submenu_output.set(value))
+    elif event == "Length":
+        conv_submenu_input.set("millimeter")
+        menu = conv_sub_optmenu_input["menu"]
+        menu.delete(0, "end")
+        for string in conv_length_menu_options:
+            menu.add_command(label=string, command=lambda value=string: conv_submenu_input.set(value))
+
+        conv_submenu_output.set("millimeter")
+        menu = conv_sub_optmenu_output["menu"]
+        menu.delete(0, "end")
+        for string in conv_length_menu_options:
+            menu.add_command(label=string, command=lambda value=string: conv_submenu_output.set(value))
+    elif event == "Area":
+        conv_submenu_input.set("square meter")
+        menu = conv_sub_optmenu_input["menu"]
+        menu.delete(0, "end")
+        for string in conv_area_menu_options:
+            menu.add_command(label=string, command=lambda value=string: conv_submenu_input.set(value))
+
+        conv_submenu_output.set("square meter")
+        menu = conv_sub_optmenu_output["menu"]
+        menu.delete(0, "end")
+        for string in conv_area_menu_options:
+            menu.add_command(label=string, command=lambda value=string: conv_submenu_output.set(value))
+    elif event == "Volume":
+        conv_submenu_input.set("cubic meter")
+        menu = conv_sub_optmenu_input["menu"]
+        menu.delete(0, "end")
+        for string in conv_volume_menu_options:
+            menu.add_command(label=string, command=lambda value=string: conv_submenu_input.set(value))
+
+        conv_submenu_output.set("cubic meter")
+        menu = conv_sub_optmenu_output["menu"]
+        menu.delete(0, "end")
+        for string in conv_volume_menu_options:
+            menu.add_command(label=string, command=lambda value=string: conv_submenu_output.set(value))
 
 def convert():
     # dictionary of conversion factors
     unitDict = {
+        "millimeter": 0.001,
+        "centimeter": 0.01,
+        "meter": 1.0,
+        "kilometer": 1000.0,
+        "foot": 0.3048,
+        "mile": 1609.344,
+        "yard": 0.9144,
+        "inch": 0.0254,
+        "square meter": 1.0,
+        "square kilometer": 1000000.0,
+        "square centimeter": 0.0001,
+        "square millimeter": 0.000001,
+        "are": 100.0,
+        "hectare": 10000.0,
+        "acre": 4046.856,
+        "square mile": 2590000.0,
+        "square foot": 0.0929,
+        "cubic meter": 1000.0,
+        "cubic centimeter": 0.001,
+        "litre": 1.0,
+        "millilitre": 0.001,
+        "gallon": 3.785,
         "gram": 1.0,
         "kilogram": 1000.0,
         "milligram": 0.001,
@@ -215,7 +290,7 @@ def convert():
         "ton": 1000000.0,
         "pound": 453.592,
         "ounce": 28.3495
-    }
+       }
     conv_input_unit = conv_submenu_input.get()
     conv_output_unit = conv_submenu_output.get()
     input_value = float(conv_input_data.get())
@@ -234,7 +309,7 @@ def convert():
 
 
 conv_input = StringVar(conv_frame)
-conv_main_menu_options = ['Weight','Temperature']
+conv_main_menu_options = ['Weight','Temperature','Length','Area','Volume']
 conv_input.set("Weight")
 
 conv_main_menu = tk.OptionMenu(conv_frame,conv_input,*conv_main_menu_options,command= main_menu_select)
@@ -269,9 +344,14 @@ conv_sub_optmenu_output.config(bd=1,width=23,height=1,background="#eee",font="ar
 
 conv_output_data = Entry(conv_frame,bg="white",bd=0)
 conv_output_data.place(x=32,y=260,width=249,height=30)
+#conv_output_data.config(state="disabled",disabledbackground="white" )
 
 convert_button = Button(conv_frame,text = "CONVERT", bg = "#57a1f2",fg = "#000000",font="verdana 10",command = convert)
 convert_button.place(x=32,y=300)
+
+# RESET button
+#reset_button = Button(conv_frame,text = "RESET", bg = "#57a1f2",fg = "#000000",font="verdana 10",command = reset )
+#reset_button.place(x=228,y=300)
 
 # converter frame ending here**************
 
